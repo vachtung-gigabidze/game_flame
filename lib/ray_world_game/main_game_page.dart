@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:game_flame/ray_world_game/ray_world_game.dart';
@@ -20,7 +22,19 @@ class MainGameState extends State<MainGamePage> {
         body: Stack(
           children: [
             GameWidget(game: game),
-            // TODO 1
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.chat,
+                  size: 28.0,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/chat');
+                },
+              ),
+            ),
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -50,7 +64,10 @@ class MainGameState extends State<MainGamePage> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
-                child: Joypad(onDirectionChanged: onJoypadDirectionChanged),
+                child: Joypad(
+                  onDirectionChanged: onJoypadDirectionChanged,
+                  onOffsetChanged: onJoypadOffsetChanged,
+                ),
               ),
             )
           ],
@@ -59,5 +76,10 @@ class MainGameState extends State<MainGamePage> {
 
   void onJoypadDirectionChanged(Direction direction) {
     game.onJoypadDirectionChanged(direction);
+  }
+
+  void onJoypadOffsetChanged(Offset offset) {
+    // log(offset.toString());
+    game.onJoypadOffsetChanged(offset);
   }
 }

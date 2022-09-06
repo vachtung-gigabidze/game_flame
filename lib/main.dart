@@ -18,7 +18,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RayWorld',
-      home: MainGamePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MainGamePage(),
+        '/chat': (context) => MessageList(),
+      },
       //home: MessageList(),
     );
   }

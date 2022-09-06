@@ -6,8 +6,10 @@ import 'direction.dart';
 
 class Joypad extends StatefulWidget {
   final ValueChanged<Direction>? onDirectionChanged;
+  final ValueChanged<Offset>? onOffsetChanged;
 
-  const Joypad({Key? key, this.onDirectionChanged}) : super(key: key);
+  const Joypad({Key? key, this.onDirectionChanged, this.onOffsetChanged})
+      : super(key: key);
 
   @override
   JoypadState createState() => JoypadState();
@@ -27,6 +29,9 @@ class JoypadState extends State<Joypad> {
           borderRadius: BorderRadius.circular(60),
         ),
         child: GestureDetector(
+          onPanDown: onDragDown,
+          onPanUpdate: onDragUpdate,
+          onPanEnd: onDragEnd,
           child: Container(
             decoration: BoxDecoration(
               color: const Color(0x88ffffff),
@@ -48,9 +53,6 @@ class JoypadState extends State<Joypad> {
               ),
             ),
           ),
-          onPanDown: onDragDown,
-          onPanUpdate: onDragUpdate,
-          onPanEnd: onDragEnd,
         ),
       ),
     );
@@ -63,6 +65,8 @@ class JoypadState extends State<Joypad> {
       direction = newDirection;
       widget.onDirectionChanged!(direction);
     }
+
+    widget.onOffsetChanged!(newDelta);
 
     setState(() {
       delta = newDelta;

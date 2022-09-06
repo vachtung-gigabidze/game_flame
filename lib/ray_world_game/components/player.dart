@@ -8,6 +8,7 @@ import 'package:game_flame/ray_world_game/helpers/direction.dart';
 class Player extends SpriteAnimationComponent
     with HasGameRef, CollisionCallbacks {
   Direction direction = Direction.none;
+  Offset offset = const Offset(0, 0);
   final double _playerSpeed = 300.0;
   final double _animationSpeed = 0.15;
   late final SpriteAnimation _runDownAnimation;
@@ -77,33 +78,38 @@ class Player extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
-    movePlayer(dt);
+    movePlayer(offset);
   }
 
-  void movePlayer(double delta) {
+  // void movePlayer(double delta) {
+  void movePlayer(Offset delta) {
     switch (direction) {
       case Direction.up:
         if (canPlayerMoveUp()) {
           animation = _runUpAnimation;
-          moveUp(delta);
+          // moveUp(delta);
+          moveOffset(delta);
         }
         break;
       case Direction.down:
         if (canPlayerMoveDown()) {
           animation = _runDownAnimation;
-          moveDown(delta);
+          //moveDown(delta);
+          moveOffset(delta);
         }
         break;
       case Direction.left:
         if (canPlayerMoveLeft()) {
           animation = _runLeftAnimation;
-          moveLeft(delta);
+          // moveLeft(delta);
+          moveOffset(delta);
         }
         break;
       case Direction.right:
         if (canPlayerMoveRight()) {
           animation = _runRightAnimation;
-          moveRight(delta);
+          // moveRight(delta);
+          moveOffset(delta);
         }
         break;
       case Direction.none:
@@ -112,21 +118,26 @@ class Player extends SpriteAnimationComponent
     }
   }
 
-  void moveDown(double delta) {
-    position.add(Vector2(0, delta * _playerSpeed));
+  // void moveDown(Offset delta) {
+  //   // position.add(Vector2(0, delta.dx * _playerSpeed));
+  //   position.add(Vector2(delta.dx, delta.dy));
+  // }
+
+  void moveOffset(Offset delta) {
+    position.add(Vector2(delta.dx / 5, delta.dy / 5));
   }
 
-  void moveUp(double delta) {
-    position.add(Vector2(0, delta * _playerSpeed * -1));
-  }
+  // void moveUp(Offset delta) {
+  //   position.add(Vector2(0, delta.dx * _playerSpeed * -1));
+  // }
 
-  void moveLeft(double delta) {
-    position.add(Vector2(delta * _playerSpeed * -1, 0));
-  }
+  // void moveLeft(Offset delta) {
+  //   position.add(Vector2(delta.dx * _playerSpeed * -1, 0));
+  // }
 
-  void moveRight(double delta) {
-    position.add(Vector2(delta * _playerSpeed, 0));
-  }
+  // void moveRight(Offset delta) {
+  //   position.add(Vector2(delta.dx * _playerSpeed, 0));
+  // }
 
   Future<void> _loadAnimations() async {
     final spriteSheet = SpriteSheet(

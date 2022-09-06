@@ -20,6 +20,10 @@ class RayWorldGame extends FlameGame
     _player.direction = direction;
   }
 
+  void onJoypadOffsetChanged(Offset offset) {
+    _player.offset = offset;
+  }
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
