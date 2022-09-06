@@ -1,12 +1,13 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:game_flame/ray_world_game/chat/mesage_list.dart';
 import 'package:game_flame/ray_world_game/main_game_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.device.fullScreen();
 
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -14,10 +15,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RayWorld',
       home: MainGamePage(),
+      //home: MessageList(),
     );
   }
 }

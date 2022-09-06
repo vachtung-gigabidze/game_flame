@@ -22,6 +22,31 @@ class MainGameState extends State<MainGamePage> {
             GameWidget(game: game),
             // TODO 1
             Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.heart_broken,
+                      size: 28.0,
+                      color: Colors.red,
+                    ),
+                    Icon(
+                      Icons.heart_broken,
+                      size: 28.0,
+                      color: Colors.red,
+                    ),
+                    Icon(
+                      Icons.heart_broken,
+                      size: 22.0,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(32.0),

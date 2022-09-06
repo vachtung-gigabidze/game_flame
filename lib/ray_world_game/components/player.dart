@@ -21,7 +21,7 @@ class Player extends SpriteAnimationComponent
 
   Player()
       : super(
-          size: Vector2.all(50.0),
+          size: Vector2.all(80.0),
         ) {
     add(RectangleHitbox());
   }
@@ -130,8 +130,9 @@ class Player extends SpriteAnimationComponent
 
   Future<void> _loadAnimations() async {
     final spriteSheet = SpriteSheet(
-      image: await gameRef.images.load('player_spritesheet.png'),
-      srcSize: Vector2(29.0, 32.0),
+      image: await gameRef.images.load('player_spritesheet2.png'),
+      //srcSize: Vector2(29.0, 32.0),
+      srcSize: Vector2(203, 224),
     );
 
     _runDownAnimation =
