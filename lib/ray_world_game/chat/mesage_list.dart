@@ -1,4 +1,8 @@
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:game_flame/ray_world_game/chat/message_widget.dart';
+import 'package:game_flame/ray_world_game/data/message.dart';
+import 'package:game_flame/ray_world_game/data/message_dao.dart';
 
 class MessageListState extends State<MessageList> {
   TextEditingController _messageController = TextEditingController();
@@ -51,12 +55,26 @@ class MessageListState extends State<MessageList> {
   }
 
   void _sendMessage() {
-    // TODO 2
+    if (_canSendMessage()) {
+      final message = Message(_messageController.text, DateTime.now());
+      widget.messageDao.saveMessage(message);
+      _messageController.clear();
+      setState(() {});
+    }
   }
 
   Widget _getMessageList() {
-    // TODO 3
-    return SizedBox.shrink();
+    return Expanded(
+      child: FirebaseAnimatedList(
+        controller: _scrollController,
+        query: widget.messageDao.getMessageQuery(),
+        itemBuilder: (context, snapshot, animation, index) {
+          final json = snapshot.value as Map<dynamic, dynamic>;
+          final message = Message.fromJson(json);
+          return MessageWidget(message.text, message.date);
+        },
+      ),
+    );
   }
 
   bool _canSendMessage() => _messageController.text.length > 0;
@@ -71,7 +89,7 @@ class MessageListState extends State<MessageList> {
 class MessageList extends StatefulWidget {
   MessageList({Key? key}) : super(key: key);
 
-  // TODO 1
+  final messageDao = MessageDao();
 
   @override
   MessageListState createState() => MessageListState();
